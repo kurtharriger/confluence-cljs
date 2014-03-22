@@ -94,7 +94,7 @@
 				
 				<section>
 						<h2>Threads?</h2>
-						<pre class="clojure"><code>
+						<pre class="clojure" style="float:left"><code id="gocode1">
 (def c (chan))
 (go (while true (&lt;! (async/timeout 250)) (>! c 1)))
 (go (while true (&lt;! (async/timeout 1000)) (>! c 2)))
@@ -104,6 +104,8 @@
 (go (while true (let [msg (&lt;! c)] (swap! model conj msg))))
 
 						</code></pre>
+						<div style="float:left" id="godemo1"></div>
+							
 					
 				</section>
 				</section>
@@ -113,6 +115,10 @@
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.min.js"></script>
+		<script src="js/react.js" type="text/javascript"></script>
+		<script src="cljs/goog/base.js" type="text/javascript"></script>
+		<script src="cljs/demo.js"></script>
+		
 
 		<script>
 
@@ -141,6 +147,8 @@
 					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
 				]
 			});
+			
+			goog.require('demo.core');
 
 		</script>
 
