@@ -1,13 +1,15 @@
 (ns demo.core
   (:require
-   [cljs.core.async :as async :refer [<! >! chan ]]
+   [cljs.core.async :as async :refer [<! >! chan put!]]
    [reagent.core :as r :refer [atom]])
   (:require-macros [cljs.core.async.macros :as m :refer [go go-loop alt!]]))
 
 (def model (atom []))
-(defn godemo1 [] [:div (for [msg (take-last 5 @model)] [:p msg])])
-(r/render-component [godemo1] (.getElementById js/document "godemo1"))
+(defn get-el [id] (.getElementById js/document id))
 
+(defn godemo1 []
+  [:div (for [msg (take-last 5 @model)] [:p msg])])
+(r/render-component [godemo1] (get-el "godemo1"))
 
 
 (def c (chan))
@@ -17,5 +19,6 @@
 (go (while true (swap! model conj (<! c))))
 
 
-(.addEventListener
- (.getElementById js/document "gocode1") "click" (fn [] (js* "debugger") nil))
+(.addEventListener (get-el "gocode1")
+                   "click"
+                   (fn [] (js* "debugger") nil))
